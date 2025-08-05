@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GGDen - Stream & Earn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #8a2be2;
+      --secondary: #00ffff;
+      --dark: #0d001a;
+      --darker: #0a0016;
+      --accent: #ff00ff;
+      --card-bg: #1a0033;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark);
+      color: white;
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3, h4, .logo, .btn {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 500;
+    }
+    
+    /* Header */
+    header {
+      padding: 20px 5%;
+      background-color: var(--darker);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      background: linear-gradient(90deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.4em;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin: 0 10px;
+      position: relative;
+    }
+    
+    nav ul li a {
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s;
+      border-radius: 5px;
+    }
+    
+    nav ul li a:hover {
+      color: var(--secondary);
+      background: rgba(138, 43, 226, 0.2);
+    }
+    
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(13, 0, 26, 0.7), rgba(13, 0, 26, 0.9)), 
+                  url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 80px;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      background: linear-gradient(90deg, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+      margin: 10px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--secondary);
+      color: var(--secondary);
+    }
+    
+    /* Sections */
+    .section {
+      padding: 80px 5%;
+      text-align: center;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    /* Streamers Grid */
+    .streamer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .streamer-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    
+    .streamer-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .streamer-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .streamer-info {
+      padding: 20px;
+    }
+    
+    .streamer-info h3 {
+      margin-bottom: 5px;
+      color: var(--secondary);
+    }
+    
+    .streamer-info p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    .streamer-live {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #ff0000;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .streamer-live::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+    
+    /* Monetize Section */
+    .monetize {
+      background: linear-gradient(135deg, #330066, #000);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .monetize::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 0, 255, 0.1) 0%, transparent 70%);
+      z-index: 0;
+    }
+    
+    .monetize-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .promo-badge {
+      background: linear-gradient(45deg, var(--accent), var(--primary));
+      padding: 10px 20px;
+      border-radius: 50px;
+      display: inline-block;
+      margin: 20px 0;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4);
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .feature {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .feature i {
+      font-size: 2rem;
+      color: var(--secondary);
+      margin-bottom: 15px;
+    }
+    
+    .feature h3 {
+      margin-bottom: 10px;
+      color: var(--secondary);
+    }
+    
+    /* Partners Section */
+    .partners {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .partner-logo {
+      height: 40px;
+      filter: grayscale(100%) brightness(2);
+      opacity: 0.7;
+      transition: all 0.3s;
+    }
+    
+    .partner-logo:hover {
+      filter: grayscale(0) brightness(1);
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .testimonial-card {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 350px;
+      text-align: left;
+      position: relative;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 4rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-family: serif;
+      line-height: 1;
+    }
+    
+    .testimonial-content {
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: cover;
+    }
+    
+    .author-info h4 {
+      color: var(--secondary);
+      margin-bottom: 5px;
+    }
+    
+    .author-info p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--darker);
+      padding: 60px 5% 30px;
+      text-align: center;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      text-align: left;
+    }
+    
+    .footer-column {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-column h3 {
+      color: var(--secondary);
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .social-links a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      nav ul {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--darker);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s;
+      }
+      
+      nav ul.active {
+        left: 0;
+      }
+      
+      nav ul li {
+        margin: 15px 0;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .hero {
+        padding-top: 120px;
+      }
+      
+      .streamer-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .section {
+        padding: 60px 5%;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 10px 20px;
+      }
+      
+      .features {
+        flex-direction: column;
+      }
+      
+      .feature {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><i class="fas fa-gamepad"></i>GGDen</div>
+    <nav>
+      <ul id="nav-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#streamers">Streamers</a></li>
+        <li><a href="#monetize">Monetize</a></li>
+        <li><a href="#partners">Partners</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+      </ul>
+      <div class="menu-toggle" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Stream & Earn with GGDen</h1>
+      <p>The ultimate platform for gamers to monetize their content and connect with fans worldwide</p>
+      <div class="hero-buttons">
+        <a href="#monetize" class="btn">Start Earning Now</a>
+        <a href="#streamers" class="btn btn-outline">Explore Streamers</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="streamers" class="section">
+    <h2 class="section-title">Featured Streamers</h2>
+    <div class="streamer-grid">
+      <div class="streamer-card">
+        <span class="streamer-live">LIVE</span>
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Streamer" class="streamer-img">
+        <div class="streamer-info">
+          <h3>GamerQueen</h3>
+          <p>Fortnite • Valorant</p>
+          <p>12.5K viewers</p>
+        </div>
+      </div>
+      <div class="streamer-card">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Streamer" class="streamer-img">
+        <div class="streamer-info">
+          <h3>ProPlayer</h3>
+          <p>Call of Duty • Apex</p>
+          <p>8.2K viewers</p>
+        </div>
+      </div>
+      <div class="streamer-card">
+        <span class="streamer-live">LIVE</span>
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Streamer" class="streamer-img">
+        <div class="streamer-info">
+          <h3>StreamDiva</h3>
+          <p>Just Chatting • Minecraft</p>
+          <p>15.7K viewers</p>
+        </div>
+      </div>
+      <div class="streamer-card">
+        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Streamer" class="streamer-img">
+        <div class="streamer-info">
+          <h3>GameMaster</h3>
+          <p>League of Legends • Dota 2</p>
+          <p>6.3K viewers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="monetize" class="section monetize">
+    <div class="monetize-content">
+      <h2 class="section-title">Live Stream Monetization</h2>
+      <div class="promo-badge">Limited Time: 15% Bonus</div>
+      <p>Join thousands of streamers who are earning with our revolutionary alert system and fan support platform.</p>
+      
+      <div class="features">
+        <div class="feature">
+          <i class="fas fa-bolt"></i>
+          <h3>Instant Alerts</h3>
+          <p>Real-time notifications for donations, subscriptions, and more</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-wallet"></i>
+          <h3>Fast Payouts</h3>
+          <p>Get paid weekly with multiple withdrawal options</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-chart-line"></i>
+          <h3>Growth Tools</h3>
+          <p>Analytics and promotion to grow your audience</p>
+        </div>
+      </div>
+      
+      <a href="#" class="btn">Get Started Now</a>
+    </div>
+  </section>
+
+  <section id="partners" class="section">
+    <h2 class="section-title">Payment Partners</h2>
+    <div class="partners">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="Paypal" class="partner-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" class="partner-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="partner-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="Bitcoin" class="partner-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" class="partner-logo">
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <h2 class="section-title">What Our Streamers Say</h2>
+    <div class="testimonials">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>GGDen helped me triple my earnings in just two months. The alert system is so engaging and my fans love it!</p>
+        </div>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="GamerX" class="author-avatar">
+          <div class="author-info">
+            <h4>GamerX</h4>
+            <p>15K Followers</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>I've tried many platforms but GGDen's support and features are unmatched. Payments always arrive on time!</p>
+        </div>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="StreamKing" class="author-avatar">
+          <div class="author-info">
+            <h4>StreamKing</h4>
+            <p>25K Followers</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>The analytics tools helped me understand my audience better and grow my channel faster than ever before.</p>
+        </div>
+        <div class="testimonial-author">
+          <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="StreamQueen" class="author-avatar">
+          <div class="author-info">
+            <h4>StreamQueen</h4>
+            <p>42K Followers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>GGDen</h3>
+        <p>The ultimate platform for gamers to monetize their content and connect with fans worldwide.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-discord"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#streamers">Streamers</a></li>
+          <li><a href="#monetize">Monetize</a></li>
+          <li><a href="#partners">Partners</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <ul class="footer-links">
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">DMCA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2025 PlanIT Solutions All rights reserved.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.innerHTML = navMenu.classList.contains('active') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+          menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Animation on scroll
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.streamer-card, .feature, .testimonial-card');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+    
+    // Set initial state for animation
+    document.querySelectorAll('.streamer-card, .feature, .testimonial-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'all 0.6s ease';
+    });
+    
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>
